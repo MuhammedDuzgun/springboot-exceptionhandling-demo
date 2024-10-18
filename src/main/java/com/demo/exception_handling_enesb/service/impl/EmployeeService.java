@@ -4,6 +4,9 @@ import com.demo.exception_handling_enesb.dto.DepartmentDto;
 import com.demo.exception_handling_enesb.dto.EmployeeDto;
 import com.demo.exception_handling_enesb.entity.Department;
 import com.demo.exception_handling_enesb.entity.Employee;
+import com.demo.exception_handling_enesb.exception.BaseException;
+import com.demo.exception_handling_enesb.exception.ErrorMessage;
+import com.demo.exception_handling_enesb.exception.MessageType;
 import com.demo.exception_handling_enesb.repository.IEmployeeRepository;
 import com.demo.exception_handling_enesb.service.IEmployeeService;
 import org.springframework.beans.BeanUtils;
@@ -25,7 +28,7 @@ public class EmployeeService implements IEmployeeService {
 
          Optional<Employee> optionalEmployee = employeeRepository.findById(id);
         if (optionalEmployee.isEmpty()){
-            return null;
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
         }
 
         Employee employee = optionalEmployee.get();
